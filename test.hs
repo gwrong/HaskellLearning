@@ -1,3 +1,5 @@
+-- Reference sheet to http://learnyouahaskell.com/
+
 -- Testing simple functions
 doubleMe x = x + x
 doubleSmallNumber x = if x > 100 then x else x*2
@@ -46,4 +48,20 @@ quicksort (x:xs) =
         biggerSorted = quicksort [a | a <- xs, a > x]  
     in  smallerSorted ++ [x] ++ biggerSorted
 
--- Curried function
+-- Curried functions
+compareWithHundred :: (Num a, Ord a) => a -> Ordering  
+compareWithHundred = compare 100
+
+-- Infix curried functions
+divideByTen :: (Floating a) => a -> a  
+divideByTen = (/10)
+
+-- Function parameters
+applyTwice :: (a -> a) -> a -> a  
+applyTwice f x = f (f x) 
+
+-- Taking in a function - getting more complex
+zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]  
+zipWith' _ [] _ = []  
+zipWith' _ _ [] = []  
+zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys  
