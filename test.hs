@@ -11,6 +11,7 @@ getOnlyEven numbers = [x | x <- numbers, even x]
 add1ToLength list = fromIntegral(length list) + 1
 
 -- Trying out declaring types
+-- a's must be Integrals
 factorial :: (Integral a) => a -> a
 factorial 0 = 1
 factorial n = n * factorial (n - 1)
@@ -20,7 +21,7 @@ recursiveLength :: (Num b) => [a] -> b
 recursiveLength [] = 0
 recursiveLength (_:xs) = 1 + recursiveLength xs
 
--- Function guards!
+-- Function guards, basically case statements (which also exist)
 heightTell :: Int -> Int -> String  
 heightTell feet inches  
     | (feet * 12) + inches <= 64 = "You're really short!"  
@@ -34,7 +35,7 @@ circleArea r =
     let area = pi * r^2
     in area
 
--- Interesting recursive magic with pattern matching
+-- Interesting recursive magic with pattern matching (x:xs = x is the first element of list, xs is the rest)
 maximum' :: (Ord a) => [a] -> a  
 maximum' [] = error "maximum of empty list"  
 maximum' [x] = x  
@@ -48,20 +49,28 @@ quicksort (x:xs) =
         biggerSorted = quicksort [a | a <- xs, a > x]  
     in  smallerSorted ++ [x] ++ biggerSorted
 
--- Curried functions
+-- Curried functions (functions are partially applied if not enough parameters are given)
 compareWithHundred :: (Num a, Ord a) => a -> Ordering  
 compareWithHundred = compare 100
 
--- Infix curried functions
+-- Infix curried functions (parameter goes to the left of the / sign)
 divideByTen :: (Floating a) => a -> a  
 divideByTen = (/10)
 
--- Function parameters
+-- Functions as parameters
 applyTwice :: (a -> a) -> a -> a  
 applyTwice f x = f (f x) 
 
 -- Taking in a function - getting more complex
+-- zip with applies a function between members of 2 lists
+-- The colon (:) does an append
+-- _ means any parameter goes
 zipWith' :: (a -> b -> c) -> [a] -> [b] -> [c]  
 zipWith' _ [] _ = []  
 zipWith' _ _ [] = []  
-zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys  
+zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys 
+
+-- Simpler function parameter example
+map :: (a -> b) -> [a] -> [b]  
+map _ [] = []  
+map f (x:xs) = f x : map f xs 
