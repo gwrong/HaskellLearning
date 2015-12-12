@@ -71,6 +71,25 @@ zipWith' _ _ [] = []
 zipWith' f (x:xs) (y:ys) = f x y : zipWith' f xs ys 
 
 -- Simpler function parameter example
-map :: (a -> b) -> [a] -> [b]  
-map _ [] = []  
-map f (x:xs) = f x : map f xs 
+-- Also check out filter
+map' :: (a -> b) -> [a] -> [b]  
+map' _ [] = []  
+map' f (x:xs) = f x : map' f xs
+
+-- foldl keeps an accumulator (Fold function)
+-- Also showcases lambdas
+-- Folds are vey useful for traversing a list to return a result
+sum' :: (Num a) => [a] -> a  
+sum' xs = foldl (\acc x -> acc + x) 0 xs 
+
+-- Or check out scanning which puts intermediate values in a list
+-- scanl (+) 0 [3,5,2,1]  
+-- [0,3,8,10,11]
+
+-- $ weakens the precedence of function applications
+-- sum (map sqrt [1..130])
+-- sum $ map sqrt [1..130]
+
+-- . is function composition
+-- map (negate . abs) [5,-3,-6,7,-3,2,-19,24]  
+-- [-5,-3,-6,-7,-3,-2,-19,-24] 
